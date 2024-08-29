@@ -18,47 +18,46 @@
 </head>
 <body>
     <h1>Pterodactyl Node Status</h1>
-    <div class="node-details" id="nodeDetails"></div>
+    <div class="node-details" id="nodeDetails">Loading node details...</div>
     <div class="error" id="error"></div>
 
     <script>
         // Configuration
         const apiUrl = "https://dash.slitinihosting.it/api/application/nodes/1";
+        const apiKey = "ptla_0QJEZjgLaV6j32E1BlI5O9PQtWBlAudUnYU4GedCVql"; // Replace with your actual API key
 
         // Function to fetch node details
-        function fetchNodeDetails() {
-            fetch(apiUrl, {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer ptla_0QJEZjgLaV6j32E1BlI5O9PQtWBlAudUnYU4GedCVql"
-                },
-                credentials: 'same-origin' // include cookies with request
-            })
-            .then(response => {
+        async function fetchNodeDetails() {
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${apiKey}`
+                    }
+                });
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                return response.json();
-            })
-            .then(data => {
+
+                const data = await response.json();
                 // Display the node details
                 const nodeDetailsDiv = document.getElementById("nodeDetails");
                 nodeDetailsDiv.innerHTML = `
                     <h2>Node Information</h2>
                     <p><strong>ID:</strong> ${data.attributes.id}</p>
                     <p><strong>Name:</strong> ${data.attributes.name}</p>
-                    <p><strong>Location:</strong> ${data.attributes.location_id}</p>
+                    <p><strong>Location ID:</strong> ${data.attributes.location_id}</p>
                     <p><strong>Memory:</strong> ${data.attributes.memory} MB</p>
                     <p><strong>Disk:</strong> ${data.attributes.disk} MB</p>
                 `;
-            })
-            .catch(error => {
+            } catch (error) {
                 // Display error message
                 const errorDiv = document.getElementById("error");
                 errorDiv.textContent = `Error fetching node details: ${error.message}`;
-            });
+            }
         }
 
         // Fetch node details when the page loads
