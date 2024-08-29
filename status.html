@@ -24,7 +24,6 @@
     <script>
         // Configuration
         const apiUrl = "https://dash.slitinihosting.it/api/application/nodes/1";
-        const apiKey = "ptla_sM34n1aHH8bdHylgDO9ujfYUQgUYP6yg9Scjw2vDd1M"; // Replace with your actual API key
 
         // Function to fetch node details
         function fetchNodeDetails() {
@@ -33,7 +32,7 @@
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${apiKey}`
+                    "Authorization": "Bearer ptla_sM34n1aHH8bdHylgDO9ujfYUQgUYP6yg9Scjw2vDd1M"
                 },
                 credentials: 'same-origin' // include cookies with request
             })
